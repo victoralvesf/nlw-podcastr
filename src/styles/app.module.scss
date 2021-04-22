@@ -5,3 +5,13 @@
     flex: 1;
   }
 }
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+
+  padding: 2rem 4rem;
+
+  height: calc(100vh - 6.5rem);
+  overflow-y: auto;
+}
