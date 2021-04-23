@@ -5,7 +5,7 @@ export function formattedDate() {
     weekday: 'short',
     day: 'numeric',
     month: 'long'
-  })
+  }).replace('.', '').replace('de', '')
 
-  return date.replace('.', '').replace('de', '');
+  return date
 }

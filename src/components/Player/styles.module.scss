@@ -27,6 +27,10 @@
 
     &.empty {
       opacity: 0.5;
+
+      button {
+        cursor: default;
+      }
     }
   }
 }

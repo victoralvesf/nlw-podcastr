@@ -1,4 +1,6 @@
-import styles from './styles.module.scss';
+import Link from 'next/link'
+
+import styles from './styles.module.scss'
 
 import { formattedDate } from '../../utils/currentDate'
 
@@ -7,7 +9,9 @@ export function Header() {
 
   return (
     <header className={styles.headerContainer}>
-      <img src="/logo.svg" alt="Podcastr" />
+      <Link href="/">
+        <img src="/logo.svg" alt="Podcastr" />
+      </Link>
 
       <p>O melhor para você ouvir, sempre</p>
 

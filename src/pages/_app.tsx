@@ -10,9 +10,7 @@ function MyApp({ Component, pageProps }) {
     <div className={styles.wrapper}>
       <main>
         <Header />
-        <div className={styles.pageContainer}>
-          <Component {...pageProps} />
-        </div>
+        <Component {...pageProps} />
       </main>
 
       <Player />
