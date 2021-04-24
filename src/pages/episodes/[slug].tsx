@@ -5,9 +5,9 @@ import Link from 'next/link'
 import services from '../../services'
 
 import styles from './episode.module.scss'
-import { SingleEpisode } from '../../types'
+import { SingleEpisode, Episode } from '../../types'
 
-export default function Episode({ episode }: SingleEpisode) {
+export default function EpisodePage({ episode }: SingleEpisode) {
   const pageTitle = episode.title.split(/[\|-]/gm)[1].trim()
 
   return (
@@ -52,8 +52,18 @@ export default function Episode({ episode }: SingleEpisode) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
+  const { episodes } = await services.episode.getLastTwoEpisodes()
+
+  const paths = episodes.map((episode: Episode) => {
+    return {
+      params: {
+        slug: episode.id
+      }
+    }
+  })
+
   return {
-    paths: [],
+    paths,
     fallback: 'blocking'
   }
 }
