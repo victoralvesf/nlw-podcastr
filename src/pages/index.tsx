@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,12 +6,14 @@ import Head from 'next/head'
 
 import services from '../services'
 import { Episodes } from '../types'
-import { PlayerContext } from '../contexts/PlayerContext'
+import { usePlayer } from '../contexts/PlayerContext'
 
 import styles from './home.module.scss'
 
 export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
-  const { episodeList, currentEpisodeIndex, play, isPlaying, setPlayingState, checkActiveEpisode } = useContext(PlayerContext)
+  const { setPlaylist, isPlaying, setPlayingState, checkActiveEpisode } = usePlayer()
+
+  const episodesList = [...latestEpisodes, ...allEpisodes]
 
   return (
     <>
@@ -23,7 +25,7 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
           <h2>Últimos lançamentos</h2>
 
           <ul>
-            {latestEpisodes.map(episode => {
+            {latestEpisodes.map((episode, index) => {
               return (
                 <li key={episode.id}>
                   <Image
@@ -52,7 +54,7 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
                         <img src="/pause-green.svg" alt="Pausar episódio" style={{ height: 13 }} />
                       </button>
                     ) : (
-                      <button type="button" onClick={() => play(episode)}>
+                      <button type="button" onClick={() => setPlaylist(episodesList, index)}>
                         <img src="/play-green.svg" alt="Tocar episódio" />
                       </button>
                     )}
@@ -77,7 +79,7 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
               </tr>
             </thead>
             <tbody>
-              {allEpisodes.map(episode => {
+              {allEpisodes.map((episode, index) => {
                 return (
                   <tr key={episode.id}>
                     <td style={{ width: 80 }}>
@@ -106,7 +108,7 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
                           <img src="/pause-green.svg" alt="Pausar episódio" style={{ height: 11 }} />
                         </button>
                       ) : (
-                        <button type="button" onClick={() => play(episode)}>
+                        <button type="button" onClick={() => setPlaylist(episodesList, index + latestEpisodes.length)}>
                           <img src="/play-green.svg" alt="Tocar episódio" />
                         </button>
                       )}

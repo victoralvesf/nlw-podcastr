@@ -1,4 +1,3 @@
-import { useContext } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
@@ -7,12 +6,12 @@ import services from '../../services'
 
 import styles from './episode.module.scss'
 import { SingleEpisode, Episode } from '../../types'
-import { PlayerContext } from '../../contexts/PlayerContext'
+import { usePlayer } from '../../contexts/PlayerContext'
 
 export default function EpisodePage({ episode }: SingleEpisode) {
   const pageTitle = episode.title.split(/[\|-]/gm)[1].trim()
 
-  const { checkActiveEpisode, play, isPlaying, setPlayingState } = useContext(PlayerContext);
+  const { checkActiveEpisode, play, isPlaying, setPlayingState } = usePlayer()
 
   return (
     <>

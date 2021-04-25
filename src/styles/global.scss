@@ -6,6 +6,7 @@
 
 :root {
   --white: #FFF;
+  --white-flex: #FFF;
 
   --gray-50: #F7F8FA;
   --gray-100: #E6E8EB;
@@ -20,6 +21,16 @@
   --purple-400: #9164FA; 
   --purple-500: #8257E5;
   --purple-800: #6F48C9;
+}
+
+[data-theme="dark"] {
+  --white: #121212;
+
+  --gray-50: #212121;
+  --gray-100: #44475a;
+  --gray-200: #CCC;
+  --gray-500: #E1E1E6;
+  --gray-800: #FEFEFE;
 }
 
 @media (max-width: 1080px) {
