@@ -1,3 +1,4 @@
+import { useContext } from 'react'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
 import Head from 'next/head'
@@ -6,9 +7,12 @@ import services from '../../services'
 
 import styles from './episode.module.scss'
 import { SingleEpisode, Episode } from '../../types'
+import { PlayerContext } from '../../contexts/PlayerContext'
 
 export default function EpisodePage({ episode }: SingleEpisode) {
   const pageTitle = episode.title.split(/[\|-]/gm)[1].trim()
+
+  const { checkActiveEpisode, play, isPlaying, setPlayingState } = useContext(PlayerContext);
 
   return (
     <>
@@ -29,13 +33,23 @@ export default function EpisodePage({ episode }: SingleEpisode) {
               src={episode.thumbnail}
               objectFit="cover"
             />
-            <button type="button">
-              <img src="/play.svg" alt="Tocar episódio" />
-            </button>
+            {isPlaying && checkActiveEpisode(episode.id) ? (
+              <button type="button" onClick={() => setPlayingState(false)}>
+                <img src="/pause.svg" alt="Pausar episódio" style={{ height: 16 }} />
+              </button>
+            ) : (
+              <button type="button" onClick={() => play(episode)}>
+                <img src="/play.svg" alt="Tocar episódio" />
+              </button>
+            )}
           </div>
 
           <header>
-            <h1>{episode.title}</h1>
+            <div className={styles.titleContainer}>
+              <h1 className={checkActiveEpisode(episode.id) ? styles.activeEpisode : ''}>
+                {episode.title}
+              </h1>
+            </div>
             <span>{episode.members}</span>
             <span>{episode.publishedAt}</span>
             <span>{episode.durationAsString}</span>

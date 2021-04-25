@@ -1,14 +1,18 @@
+import React, { useContext } from 'react'
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import Head from 'next/head'
+
 import services from '../services'
 import { Episodes } from '../types'
+import { PlayerContext } from '../contexts/PlayerContext'
 
 import styles from './home.module.scss'
-import React from 'react'
 
 export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
+  const { episodeList, currentEpisodeIndex, play, isPlaying, setPlayingState, checkActiveEpisode } = useContext(PlayerContext)
+
   return (
     <>
       <Head>
@@ -34,16 +38,24 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
                   <div className={styles.episode}>
                     <div className={styles.episodeDetails}>
                       <Link href={`/episodes/${episode.id}`}>
-                        <a>{episode.title}</a>
+                        <a className={checkActiveEpisode(episode.id) ? styles.episodeActive : ''} >
+                          {episode.title}
+                        </a>
                       </Link>
                       <p title={episode.members}>{episode.members}</p>
                       <span>{episode.publishedAt}</span>
                       <span>{episode.durationAsString}</span>
                     </div>
 
-                    <button type="button">
-                      <img src="/play-green.svg" alt="Tocar episódio" />
-                    </button>
+                    {isPlaying && checkActiveEpisode(episode.id) ? (
+                      <button type="button" onClick={() => setPlayingState(false)}>
+                        <img src="/pause-green.svg" alt="Pausar episódio" style={{ height: 13 }} />
+                      </button>
+                    ) : (
+                      <button type="button" onClick={() => play(episode)}>
+                        <img src="/play-green.svg" alt="Tocar episódio" />
+                      </button>
+                    )}
                   </div>
                 </li>
               )
@@ -80,16 +92,24 @@ export default function Home({ latestEpisodes, allEpisodes }: Episodes) {
                     </td>
                     <td>
                       <Link href={`/episodes/${episode.id}`}>
-                        <a>{episode.title}</a>
+                        <a className={checkActiveEpisode(episode.id) ? styles.episodeActive : ''}>
+                          {episode.title}
+                        </a>
                       </Link>
                     </td>
                     <td>{episode.members}</td>
                     <td style={{ width: 100 }}>{episode.publishedAt}</td>
                     <td>{episode.durationAsString}</td>
                     <td>
-                      <button type="button">
-                        <img src="/play-green.svg" alt="Tocar episódio" />
-                      </button>
+                      {isPlaying && checkActiveEpisode(episode.id) ? (
+                        <button type="button" onClick={() => setPlayingState(false)}>
+                          <img src="/pause-green.svg" alt="Pausar episódio" style={{ height: 11 }} />
+                        </button>
+                      ) : (
+                        <button type="button" onClick={() => play(episode)}>
+                          <img src="/play-green.svg" alt="Tocar episódio" />
+                        </button>
+                      )}
                     </td>
                   </tr>
                 )
