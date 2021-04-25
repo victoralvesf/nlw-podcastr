@@ -50,6 +50,7 @@ export function PlayerContextProvider({ children }: PlayerContextProviderProps) 
     }
     setEpisodeList([episode])
     setCurrentEpisodeIndex(0)
+    setIsShuffling(false)
     setIsPlaying(true)
   }
 
