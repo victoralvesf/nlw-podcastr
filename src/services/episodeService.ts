@@ -54,7 +54,7 @@ export default function episodeService (httpClient: AxiosInstance) {
     },
 
     getOne: async (id: string | string[]) => {
-      const { data } = await httpClient.get(`/episodes/${id}`)
+      const { data } = await httpClient.get(`episodes/${id}`)
 
       const episode = formatSingleEpisode(data)
 
