@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react"
+import { createContext, ReactNode, useContext, useEffect, useLayoutEffect, useState } from "react"
 
 type ThemeData = {
   theme: boolean
@@ -28,7 +28,7 @@ function MoonEmoji() {
 export function ThemeContextProvider({ children }: ThemeContextProviderProps) {
   const [theme, setTheme] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const theme = localStorage.getItem('theme')
 
     if (theme) {
